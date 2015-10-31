@@ -52,7 +52,7 @@
     <div class="container">
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+ <!--     <div class="jumbotron"> -->
         <h2>service status</h2>
 <?php
 $fprobe_pid = shell_exec('pgrep fprobe');
@@ -60,7 +60,7 @@ $nfcapd_pid = shell_exec('pgrep nfcapd');
 echo "<pre>Netflow sensor pid (fprobe): $fprobe_pid
 Netflow collector pid (nfcapd): $nfcapd_pid</pre>";
 ?>
-      </div>
+<!--      </div> -->
 
     </div> <!-- /container -->
 

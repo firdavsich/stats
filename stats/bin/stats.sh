@@ -1,34 +1,28 @@
 #!/bin/bash
 
-
-STATS_DIR='/home/stats/all'
+STATS_DIR='/home/stats/data'
 DATE=`echo $2 | sed -e '1,$ s/-/\//g'`
 
 function stat_all()
 {
 nfdump -R ${STATS_DIR}/${DATE} '
-dst net 192.168.5.0/24 
- or dst net 192.168.100.0/24
-  and not src net 192.168.5.0/24
-   and not src net 192.168.100.0/24
+dst net 192.168.1.0/24 
+  and not src net 192.168.1.0/24
 '
 }
 
 function summ_all()
 {
 nfdump -R ${STATS_DIR}/${DATE} '
-dst net 192.168.5.0/24 
- or dst net 192.168.100.0/24
-  and not src net 192.168.5.0/24
-   and not src net 192.168.100.0/24
-' -s dstip/bytes
+dst net 192.168.1.0/24 
+  and not src net 192.168.1.0/24
+' -s dstip/bytes -n 0
 }
 
 function stat_no_tjk()
 {
 nfdump -R ${STATS_DIR}/${DATE} '
-dst net 192.168.5.0/24 
- or dst net 192.168.100.0/24
+dst net 192.168.1.0/24 
   and not src net 192.168.0.0/16
    and not src net 10.0.0.0/8
 and not src net 37.98.152.0/20
@@ -71,8 +65,7 @@ and not src net 217.11.176.0/20
 function summ_no_tjk()
 {
 nfdump -R ${STATS_DIR}/${DATE} '
-dst net 192.168.5.0/24 
- or dst net 192.168.100.0/24
+dst net 192.168.1.0/24 
   and not src net 192.168.0.0/16
    and not src net 10.0.0.0/8
 and not src net 37.98.152.0/20
@@ -109,7 +102,7 @@ and not src net 195.140.128.0/23
 and not src net 195.246.102.0/23
 and not src net 217.8.32.0/20
 and not src net 217.11.176.0/20
-' -s dstip/bytes
+' -s dstip/bytes -n 0
 }
 
 
@@ -132,3 +125,4 @@ Usage: $0 {stat_all <date>|stat_no_tjk <date>|summ_all <date>|summ_no_tjk <date>
 example: $0 summ_all 2015-10-29 \033[0m\n"
     exit 1
 esac
+
